@@ -1,23 +1,34 @@
 import React from 'react';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { currentEvent: '---' };
+    this.update = this.update.bind(this);
+  }
+
+  update(e) {
+    this.setState({ currentEvent: e.type });
+  }
+
   render() {
-    return <Title text="The Text" />;
+    return (
+      <div>
+        <textarea
+          onBlur={this.update}
+          onCopy={this.update}
+          onCut={this.update}
+          onDoubleClick={this.update}
+          onFocus={this.update}
+          onKeyPress={this.update}
+          onPaste={this.update}
+          cols="30"
+          rows="10"
+        />
+        <h1>{this.state.currentEvent}</h1>
+      </div>
+    );
   }
 }
-
-const Title = props => <h1>Title: {props.text}</h1>;
-
-Title.propTypes = {
-  text(props, propName, _component) {
-    if (!(propName in props)) {
-      return new Error(`Missing ${propName}`);
-    }
-
-    if (props[propName].length < 6) {
-      return new Error(`${propName} was too short`);
-    }
-  },
-};
 
 export default App;
